@@ -130,7 +130,21 @@ Page({
         wx.addCard({
           cardList: [card],
           success(res){
-            console.log("res.cardlist",res.cardList);
+            console.log("res.cardlist", res);
+            if (res.isSuccess){
+              request({
+                url: ApiList.applyMCard + "?time=" + new Date(),
+                data: {
+                  appid: cfg.appid,
+                  secret: cfg.secret,
+                  cardList: res.cardlist,
+                  openid: token.token.openid
+                },
+                success:function(res){
+
+                }
+              });
+            }
           }
         })
       }

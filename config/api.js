@@ -10,6 +10,7 @@ export default {
   "queryMCardDetails": `${host}api/sharing/QueryMCardDetails`,//查询会员卡详情
   "queryMyMCardDetails": `${host}api/sharing/QueryMyMCardDetails`,//查询我的已经拥有的会员卡列表
   "upgradeSharedPyramid": `${host}api/sharing/UpgradeSharedPyramid`,//更新分享信息
+  "registerMCard": `${host}api/sharing/registerMCard`,//更新分享信息
 
 
     "queryMerchants":       `${host}api/enjoy/QueryMerchants`,                          //查询商信息
