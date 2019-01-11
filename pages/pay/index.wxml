@@ -1,0 +1,36 @@
+
+
+<view class="page">
+    <view class="page__hd">
+        <view class="page__title">订单预览</view>
+        <view class="page__desc">会员卡充值订单预览</view>
+    </view>
+    <view class="page__bd">
+        <view class="weui-form-preview">
+            <view class="weui-form-preview__hd">
+                <view class="weui-form-preview__item">
+                    <view class="weui-form-preview__label">付款金额</view>
+                    <view class="weui-form-preview__value_in-hd">¥100.00</view>
+                </view>                
+            </view>
+          
+            <view class="weui-form-preview__bd">
+            <view class="weui-form-preview__item">
+                    <view class="weui-form-preview__label">订单编号</view>                    
+                    <view class="weui-form-preview__value">T1000000</view>
+                </view>
+                <view class="weui-form-preview__item">
+                    <view class="weui-form-preview__label">商品名称</view>
+                    <view class="weui-form-preview__value">会员卡充值</view>
+                </view>
+                <view class="weui-form-preview__item">
+                    <view class="weui-form-preview__label">商户名称</view>
+                    <view class="weui-form-preview__value">一味现捞</view>
+                </view>
+            </view>
+            <view class="weui-form-preview__ft">
+                <navigator url="" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">立即支付</navigator>                   
+            </view>            
+        </view>     
+    </view>
+</view>

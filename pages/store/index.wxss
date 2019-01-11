@@ -1,0 +1,18 @@
+
+.location{padding: 10px 0}
+.location .icon{width:16px;height:16px;vertical-align: middle;}
+.location .title{padding: 0 6px}
+
+
+
+.mt10 {
+  margin: 0 auto;
+  text-align: center;
+  height: 70rpx;
+  width: 450rpx;
+  line-height: 70rpx;
+  border-radius: 10rpx;
+  border: 1px solid #999;
+  font-size: 30rpx;
+  margin-top: 30rpx;
+}

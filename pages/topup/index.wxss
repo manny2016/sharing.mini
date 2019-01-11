@@ -1,0 +1,14 @@
+/* pages/topup/index.wxss */
+.money-block{
+  margin-inline-start:  10px;
+  margin-top:  25px;
+  margin-left:  25px;  
+  font-size: 48px;
+  border-color:  gray;
+  border-width: 1px;  
+  width: 80px;    
+  font-style:italic;  
+}
+.active{
+  background-color: green;
+}

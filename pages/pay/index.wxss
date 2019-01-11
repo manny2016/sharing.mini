@@ -1,0 +1,4 @@
+/* pages/pay/index.wxss */
+.weui-form-preview{
+    margin-bottom: 25px;
+}

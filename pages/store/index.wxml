@@ -1,0 +1,11 @@
+
+<swiper indicator-dots="true" autoplay="true" interval="5000" duration="1000" indicator-color="rgba(0,0,0,.1)" indicator-active-color="#ff4d61">
+  <block wx:for="{{bannerList}}">
+    <swiper-item>
+      <navigator url="{{item.linkTo}}">       
+        <!-- <text class="title">{{item.linkName}}</text> -->
+        <image src="{{item.pic}}" class="slide-image" mode="widthFix" />        
+      </navigator>
+    </swiper-item>
+  </block>
+</swiper>

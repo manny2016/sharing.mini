@@ -1,0 +1,10 @@
+<swiper indicator-dots="true">
+  <block wx:for="{{images}}" wx:for-index="index">
+    <swiper-item class="swiper-items">
+      <image class="swiper-image" src="{{item}}"></image>
+      <button class="button-img" 
+      open-type='getUserInfo'
+      bindgetuserinfo="getUserInfoCallback" wx:if="{{index == images.length - 1}}">立即体验</button>
+    </swiper-item>
+  </block>
+</swiper>

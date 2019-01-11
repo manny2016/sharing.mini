@@ -1,0 +1,33 @@
+<view class="page">
+  <view class="page__hd">
+    <view class="page__title">统一下单</view>
+    <view class="page__desc">选择支付方式，填写支付金额完成支付</view>
+  </view>
+ <view class="weui-cells__title">填写支付金额</view>
+        <view class="weui-cells weui-cells_after-title">
+            <view class="weui-cell weui-cell_input">
+                <view class="weui-cell__hd">
+                    <view class="weui-label">支付金额</view>
+                </view>
+                <view class="weui-cell__bd">
+                    <input class="weui-input" placeholder="￥0.00元"/>
+                </view>
+            </view>           
+        </view>
+  <view class="weui-cells__title">选择支付方式</view>
+  <view class="weui-cells weui-cells_after-title">
+    <radio-group bindchange="radioChange">
+      <label class="weui-cell weui-check__label" wx:for="{{payModes}}" wx:key="value">
+        <radio class="weui-check" value="{{item.name}}" checked="{{item.checked}}" />
+        <view class="weui-cell__bd">{{item.text}}</view>
+        <view class="weui-cell__ft weui-cell__ft_in-radio" wx:if="{{item.checked}}">
+          <icon class="weui-icon-radio" type="success_no_circle" size="16"></icon>
+
+        </view>
+      </label>
+    </radio-group>
+  </view>
+  <view class="weui-btn-area">
+    <button class="weui-btn" type="primary" bindtap="showTopTips">立即支付</button>
+  </view>
+</view>

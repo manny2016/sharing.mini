@@ -1,0 +1,4 @@
+/* pages/member/index.wxss */
+.mini-btn{
+    margin-right: 5px;
+}

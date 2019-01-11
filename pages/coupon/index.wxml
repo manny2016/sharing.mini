@@ -1,0 +1,46 @@
+
+<view class="page">    
+    <view class="page__hd">    
+        <view class="page__title">附件的券</view>
+        <view class="page__desc">领取优惠券到店消费</view>
+    </view>
+    <view class="page__bd">
+        <view class="weui-panel weui-panel_access">
+            <view class="weui-panel__bd">
+                <navigator url="/pages/card_details/index?id=111" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+                    <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
+                        <image class="weui-media-box__thumb" src="/images/card_ico/merchant.jpg" />
+                    </view>
+                    <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+                        <view class="weui-media-box__title">【5元代金券】一味现捞</view>
+                        <view class="weui-media-box__desc">会员享有9折优惠，消费积分,积分可抵用现金</view>
+                    </view>
+                </navigator>
+                          <navigator url="/pages/card_details/index?id=111" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+                    <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
+                        <image class="weui-media-box__thumb" src="/images/card_ico/1.jpg" />
+                    </view>
+                    <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+                        <view class="weui-media-box__title">【5元代金券】一味现捞</view>
+                        <view class="weui-media-box__desc">会员享有9折优惠，消费积分,积分可抵用现金。</view>
+                    </view>
+                </navigator>
+                <navigator url="/pages/card_details/index?id=111" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+                    <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
+                        <image class="weui-media-box__thumb" src="/images/card_ico/Lemon.jpg" />
+                    </view>
+                    <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+                        <view class="weui-media-box__title">【5元代金券】柠檬工坊</view>
+                        <view class="weui-media-box__desc">优质饮品，给你不一样的体验。会员卡享受8这优惠。在线下单享受更多。</view>
+                    </view>
+                </navigator>
+            </view>
+            <view class="weui-panel__ft">
+                <view class="weui-cell weui-cell_access weui-cell_link">
+                    <view class="weui-cell__bd">查看更多</view>
+                    <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+                </view>
+            </view>
+        </view>        
+    </view>
+</view>

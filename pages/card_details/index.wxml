@@ -1,0 +1,59 @@
+<view class="page" xmlns:wx="http://www.w3.org/1999/xhtml">
+  <view class="weui-panel__bd ">
+    <swiper indicator-dots="true" autoplay="true" interval="5000" duration="1000" indicator-color="rgba(0,0,0,.1)" indicator-active-color="#ff4d61">
+      <block wx:for="{{bannerList}}">
+        <swiper-item>
+          <navigator url="{{item.linkTo}}">
+            <!-- <text class="title">{{item.linkName}}</text> -->
+            <image src="{{item.pic}}" class="slide-image" mode="widthFix" />
+          </navigator>
+        </swiper-item>
+      </block>
+    </swiper>
+  </view>
+
+
+  <view class="page__bd">
+    <view class="weui-form-preview">
+      <view class="weui-form-preview__hd">
+        <view class="weui-form-preview__item">
+          <view class="weui-form-preview__label">商户名称</view>
+          <view class="weui-form-preview__value_in-hd">{{details.brandName}}</view>
+        </view>
+      </view>
+      <view class="weui-form-preview__bd">
+        <view class="weui-form-preview__item">
+          <view class="weui-form-preview__label">类型</view>
+          <view class="weui-form-preview__value">{{details.title}}</view>
+        </view>
+        <view class="weui-form-preview__item">
+          <view class="weui-form-preview__label">会员特权</view>
+          <view class="weui-form-preview__value">{{details.prerogative}}</view>
+        </view>
+        <view class="weui-form-preview__item">
+          <view class="weui-form-preview__label">状态</view>
+          <view wx:if="{{details.ready==false}}" class="weui-form-preview__value" style='color:red'>未拥有</view>
+          <view wx:if="{{details.ready==true}}" class="weui-form-preview__value" style='color:blue'>已拥有</view>
+        </view>
+        <view class="weui-form-preview__item ">
+          <view hover-class="weui-cell_active">
+            <view class="weui-form-preview__label">鼓励奖</view>
+            <view class="weui-form-preview__value" style='color:red'>￥{{details.RewardMoney}}元</view>
+          </view>
+        </view>
+        <view>from:{{fromOpenId}}</view>
+        <view>me:{{openid}}</view>
+        <button open-type='share'>分享赚取佣金</button>        
+      </view>
+
+      <view class="weui-form-preview__ft float-bottom">
+        <view class="weui-form-preview__btn weui-form-preview__btn_default" data-details='{{details}}' catchtap='onTouchAddCardBag'>加入卡包</view>
+      
+        
+        <!-- <navigator class="weui-form-preview__btn weui-form-preview__btn_default" 
+        hover-class="weui-form-preview__btn_active">赚取佣金</navigator>-->
+        <navigator class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">立即使用</navigator>
+      </view>
+    </view>
+  </view>
+</view>
