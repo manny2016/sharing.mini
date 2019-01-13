@@ -30,7 +30,9 @@ Page({
     sliderLeft: 0,
     details:{},
     openid:"",
-    fromOpenId:""
+    fromOpenId:"", 
+    cards:[],
+    cardId:""
   },
 
   /**
@@ -39,12 +41,12 @@ Page({
   onLoad: function (options) {
     const me = this;    
     let token = wx.getStorageSync(cfg.localKey.token);
+    console.log("options",options);
     me.setData({      
       openid: token.sharing.openid,
-      fromOpenId: options.fromOpenId
-    }); 
-    
-   
+      fromOpenId: options.fromOpenId,
+      cardId: options.card_id
+    });    
    
     //如果来自于微信分享则提交并保存分享关联信息
     if (options.fromOpenId!=token.token.openid&&options.fromOpenId!=undefined){
@@ -60,19 +62,32 @@ Page({
       appid:cfg.appid,
       card_id: options.card_id,
       openid:token.token.openid
-    }).then(res => {
-      console.log("query MyCard",res.data);
+    }).then(res => {      
       me.setData({ details:res.data});
-    });
+    });   
     
-
     
   },
   /**
    * Lifecycle function--Called when page is initially rendered
    */
-  onReady: function () {
-
+  onReady: function () {    const me = this;
+    let token = wx.getStorageSync(cfg.localKey.token);     
+    request({
+      url: ApiList.applyMCard + "?time=" + new Date(),
+      method: "POST",
+      data: {
+        mcode: cfg.mcode,
+        card_id: me.data.cardId
+      },
+      success:function(res){
+        me.data.cards.push({
+          cardId: me.data.cardId,
+          cardExt: '{"timestamp":' + res.data.timestamp + ', "nonce_str":"' + res.data.nonceStr + '","signature":"' + res.data.signature + '"}'
+        });
+        console.log(me.data.cards);
+      }
+    });
   },
 
   /**
@@ -111,30 +126,18 @@ Page({
   },
   onTouchAddCardBag: function (event) {  
     const me = this;  
-    let token = wx.getStorageSync(cfg.localKey.token);    
-    request({
-      url: ApiList.applyMCard + "?time=" + new Date(),
-      method: "POST",
-      data: {
-        appid: cfg.appid,
-        secret: cfg.secret,
-        card_id: me.data.details.card_id,
-        openid: token.token.openid
+    let token = wx.getStorageSync(cfg.localKey.token);   
+    console.log(me.data.cards);
+    wx.addCard({
+      cardList: me.data.cards,
+      success:function(res){
+        console.log("res.cardlist", res.cardList);
       },
-      success: function (res) {     
-        
-        var card = {
-          cardId: me.data.details.card_id,
-          cardExt: res.data
-        }    
-        wx.addCard({
-          cardList: [card],
-          success(res){
-            console.log("res.cardlist",res.cardList);
-          }
-        })
+      fail:function(res){
+        console.log("fail", res);
       }
     });
+
      //getCardExtString
     
   } ,
