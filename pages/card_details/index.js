@@ -32,7 +32,8 @@ Page({
     openid:"",
     fromOpenId:"", 
     cards:[],
-    cardId:""
+    cardId:"",
+    ready:false
   },
 
   /**
@@ -64,37 +65,21 @@ Page({
       openid:token.token.openid
     }).then(res => {      
       me.setData({ details:res.data});
-    });   
-    
-    
+      me.setData({ready:true});
+    });    
   },
   /**
    * Lifecycle function--Called when page is initially rendered
    */
   onReady: function () {    const me = this;
-    let token = wx.getStorageSync(cfg.localKey.token);     
-    request({
-      url: ApiList.applyMCard + "?time=" + new Date(),
-      method: "POST",
-      data: {
-        mcode: cfg.mcode,
-        card_id: me.data.cardId
-      },
-      success:function(res){
-        me.data.cards.push({
-          cardId: me.data.cardId,
-          cardExt: '{"timestamp":' + res.data.timestamp + ', "nonce_str":"' + res.data.nonceStr + '","signature":"' + res.data.signature + '"}'
-        });
-        console.log(me.data.cards);
-      }
-    });
+  
   },
 
   /**
    * Lifecycle function--Called when page show
    */
   onShow: function () {
-
+    
   },
 
   /**
@@ -127,49 +112,40 @@ Page({
   onTouchAddCardBag: function (event) {  
     const me = this;  
     let token = wx.getStorageSync(cfg.localKey.token);   
-    console.log(me.data.cards);
-    wx.addCard({
-      cardList: me.data.cards,
-      success:function(res){
-        console.log("res.cardlist", res.cardList);
+    
+    request({
+      url: ApiList.applyMCard + "?time=" + new Date(),
+      method: "POST",
+      data: {
+        mcode: cfg.mcode,
+        card_id: me.data.cardId
       },
-<<<<<<< HEAD
-      success: function (res) {     
-        
-        var card = {
-          cardId: me.data.details.card_id,
-          cardExt: res.data
-        }    
-        wx.addCard({
-          cardList: [card],
-          success(res){
-            console.log("res.cardlist", res);
-            if (res.isSuccess){
-              request({
-                url: ApiList.applyMCard + "?time=" + new Date(),
-                data: {
-                  appid: cfg.appid,
-                  secret: cfg.secret,
-                  cardList: res.cardlist,
-                  openid: token.token.openid
-                },
-                success:function(res){
-
-                }
-              });
-            }
-          }
-        })
-=======
-      fail:function(res){
-        console.log("fail", res);
->>>>>>> 7167bda4d3b84f5cb07f07994ab390af279f07b6
+      success: function (res) {
+        var cards =[{
+          cardId: me.data.cardId,
+          cardExt: '{"timestamp":' + res.data.timestamp + ',"signature":"' + res.data.signature +  '", "nonce_str":"' + res.data.nonceStr + '"}'
+        }];     
+        me.addCard(cards);
       }
     });
+
+    
+
 
      //getCardExtString
     
   } ,
+  addCard:function(cards){
+    wx.addCard({
+      cardList: cards,
+      success: function (res) {
+        console.log("res.cardlist", res.cardList);
+      },
+      fail: function (res) {
+        console.log("fail", res);
+      }
+    });
+  },
   /**
    * Called when user click on the top right corner to share
    */
