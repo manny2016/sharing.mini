@@ -136,10 +136,26 @@ Page({
     
   } ,
   addCard:function(cards){
+    const me = this;
+    let token = wx.getStorageSync(cfg.localKey.token);
     wx.addCard({
       cardList: cards,
       success: function (res) {
-        console.log("res.cardlist", res.cardList);
+        console.log(res);
+        request({
+          url: ApiList.registerMCard + "?time=" + new Date(),
+          method: "POST",
+          data: {
+            mcode: cfg.mcode,
+            openid: token.token.openid,
+            appid:cfg.appid,
+            cardList:res.cardList
+          },
+          success: function (res) {
+          
+          
+          }
+        });
       },
       fail: function (res) {
         console.log("fail", res);
