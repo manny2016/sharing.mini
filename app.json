@@ -1,7 +1,7 @@
 {
   "pages": [
     "pages/welcome/index",
-    "pages/card/index",    
+    "pages/card/index",
     "pages/card_details/index",
     "pages/store/index",
     "pages/member/index",
@@ -10,8 +10,8 @@
     "pages/topup/index",
     "pages/login/index",
     "pages/make-order/index",
-    "pages/coupon/index"
-    
+    "pages/coupon/index",
+    "pages/myorder/index"
   ],
   "window": {
     "backgroundTextStyle": "white",
@@ -33,11 +33,23 @@
     "backgroundColor": "#FAFAFA",
     "list": [
       {
+        "pagePath": "pages/store/index",
+        "iconPath": "images/tabbar/mmhtab_icon_mmh_n@2x.png",
+        "selectedIconPath": "images/tabbar/mmhtab_icon_mmh_s@2x.png",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/myorder/index",
+        "iconPath": "images/tabbar/mmhtab_icon_gwc_n@2x.png",
+        "selectedIconPath": "images/tabbar/mmhtab_icon_gwc_s@2x.png",
+        "text": "订单"
+      },
+      {
         "pagePath": "pages/card/index",
         "iconPath": "images/tabbar/mmhtab_icon_fl_n@2x.png",
         "selectedIconPath": "images/tabbar/mmhtab_icon_fl_s@2x.png",
-        "text": "会员卡"
-      },      
+        "text": "分销"
+      },
       {
         "pagePath": "pages/member/index",
         "iconPath": "images/tabbar/mmhtab_icon_me_n@2x.png",
@@ -47,5 +59,4 @@
     ]
   },
   "debug": true
-
 }

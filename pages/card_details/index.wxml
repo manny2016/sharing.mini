@@ -43,13 +43,13 @@
         </view>
         <!-- <view>from:{{fromOpenId}}</view>
         <view>me:{{openid}}</view> -->
-        <button wx:if="{{ready}}" open-type='share'>分享赚取佣金</button>        
+        <button wx:if="{{ready}}" open-type='share'>分享赚取佣金</button>
       </view>
 
       <view class="weui-form-preview__ft float-bottom" wx:if="{{ready}}">
         <view class="weui-form-preview__btn weui-form-preview__btn_default" data-details='{{details}}' catchtap='onTouchAddCardBag'>加入卡包</view>
-      
-        
+
+
         <!-- <navigator class="weui-form-preview__btn weui-form-preview__btn_default" 
         hover-class="weui-form-preview__btn_active">赚取佣金</navigator>-->
         <navigator class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">立即使用</navigator>

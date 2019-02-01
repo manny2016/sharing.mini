@@ -1,18 +1,29 @@
-
-.location{padding: 10px 0}
-.location .icon{width:16px;height:16px;vertical-align: middle;}
-.location .title{padding: 0 6px}
-
-
-
-.mt10 {
-  margin: 0 auto;
-  text-align: center;
-  height: 70rpx;
-  width: 450rpx;
-  line-height: 70rpx;
-  border-radius: 10rpx;
-  border: 1px solid #999;
-  font-size: 30rpx;
-  margin-top: 30rpx;
+page,
+.page,
+.page__bd{
+    height: 100%;
 }
+.page__bd{
+    padding-bottom: 0;
+}
+.weui-tab__content{
+    padding-top: 0px;
+    text-align: center;    
+    
+}
+.slide-image{width:100%}
+
+.float-bottom {
+  width: 100%;
+  position: fixed;  
+  bottom: 0;
+}
+.float-top {  
+  position: fixed;  
+  top: 0;
+}
+.weui-media-box {
+  height: 70px;
+}
+
+

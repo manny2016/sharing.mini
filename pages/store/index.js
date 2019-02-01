@@ -3,11 +3,67 @@ Page({
   /**
    * Page initial data
    */
-  data: {
-    bannerList:[
-      { linkTo: "", pic:"https://www.yourc.club/media/banners/banner-01.jpg" },
-      { linkTo: "", pic: "https://www.yourc.club/media/banners/banner-02.jpg" },
-      { linkTo: "", pic: "https://www.yourc.club/media/banners/banner-03.jpg" }
+  data: {    
+    activeIndex: 0,
+    sliderOffset: 0,
+    sliderLeft: 0,
+    bannerList: [{
+      linkTo: "",
+      pic: "https://www.yourc.club/images/banners/banner-01.jpg"
+    },
+    {
+      linkTo: "",
+      pic: "https://www.yourc.club/images/banners/banner-02.jpg"
+    },
+    {
+      linkTo: "",
+      pic: "https://www.yourc.club/images/banners/banner-03.jpg"
+    }
+    ],
+    tabs: [
+      {
+        category: "热销饮品", items: [{
+          id: 123,
+          image: "https://www.yourc.club/images/banners/banner-01.jpg",
+          originalPrice:20,
+          price: 15,
+          name: "热销饮品1"
+        }, {
+            id: 123,
+            image: "https://www.yourc.club/images/banners/banner-01.jpg",
+            originalPrice: 20,
+            price: 15,
+            name: "热销饮品1"
+          }]
+      },
+      {
+        category: "特价饮品", items: [{
+          id: 123,
+          image: "https://www.yourc.club/images/banners/banner-01.jpg",
+          originalPrice: 20,
+          price: 15,
+          name: "特价饮品1"
+        }]
+      },
+      {
+        category: "柠檬系列", items: [{
+          id: 123,
+          image: "https://www.yourc.club/images/banners/banner-01.jpg",
+          originalPrice: 20,
+          price: 15,
+          name: "特价饮品1"
+        }]
+      },
+      
+      {
+        category: "奶茶系列", items: [{
+          id: 123,
+          image: "https://www.yourc.club/images/banners/banner-01.jpg",
+          originalPrice: 20,
+          price: 15,
+          name: "特价饮品1"
+        }]
+      }
     ]
   },
 
@@ -65,5 +121,11 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+  tabClick: function (e) {
+    this.setData({
+      sliderOffset: e.currentTarget.offsetLeft,
+      activeIndex: e.currentTarget.id
+    });
   }
 })

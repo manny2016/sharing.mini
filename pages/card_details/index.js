@@ -42,11 +42,11 @@ Page({
   onLoad: function (options) {
     const me = this;    
     let token = wx.getStorageSync(cfg.localKey.token);
-    console.log("options",options);
+    console.log("options",token);
     me.setData({      
       openid: token.sharing.openid,
       fromOpenId: options.fromOpenId,
-      cardId: options.card_id
+      cardId: options.cardid
     });    
    
     //如果来自于微信分享则提交并保存分享关联信息
@@ -61,7 +61,7 @@ Page({
     
     me.queryMCardDetails({
       appid:cfg.appid,
-      card_id: options.card_id,
+      cardid: options.cardid,
       openid:token.token.openid
     }).then(res => {      
       me.setData({ details:res.data});
@@ -118,7 +118,7 @@ Page({
       method: "POST",
       data: {
         mcode: cfg.mcode,
-        card_id: me.data.cardId
+        cardid: me.data.cardid
       },
       success: function (res) {
         var cards =[{
@@ -149,11 +149,11 @@ Page({
             mcode: cfg.mcode,
             openid: token.token.openid,
             appid:cfg.appid,
+            unionid:token.sharing.unionid,
             cardList:res.cardList
           },
           success: function (res) {
-          
-          
+            
           }
         });
       },
@@ -170,8 +170,7 @@ Page({
   } , 
   onSharingCard:function(event){
     let details = event.target.dataset["details"];  
-    console.log(details);
-    
+    console.log(details);    
   }
 })
 

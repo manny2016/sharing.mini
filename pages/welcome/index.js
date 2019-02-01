@@ -27,7 +27,7 @@ Page({
       let token = wx.getStorageSync(cfg.localKey.token);
       if (res.canUseUserInfo && token.token.openid != undefined) {
         wx.switchTab({
-          url: '/pages/card/index',
+          url: '/pages/store/index',
         })
       }
       else {

@@ -43,45 +43,39 @@ Page({
     topupContext: {
       appid: "",
       money: 20,
-      openid: "",
-      unionid: "",
+      openid: "",      
       cardid: "",
       code: ""
     }
   },
-  onLoad() {
+  onLoad(options) {
+    console.log("options",options);
     const me = this;
     let token = wx.getStorageSync(cfg.localKey.token);
+    console.log("token",token);
     me.setData({
       topupContext: {
+        userid:token.sharing.id,
+        mcode:cfg.mcode,
         appid: cfg.appid,
         money: 20,
-        openid: token.token.openid,
-        unionid: token.unionId,
-        cardid: "ddd",
-        code: "ddd",
-        mcode: cfg.mcode
+        openid: token.token.openid,        
+        code: options.code,
+        cardid:options.cardid
       }
     });
-    console.log(me.data.topupContext);
+    
   },
   clickMoneyBlock: function(event) {
     const me = this;
     let token = wx.getStorageSync(cfg.localKey.token);
     if (event.target.dataset["money"]) {
       me.setData({
-        topupContext: {
-          appid: cfg.appid,
-          money: event.target.dataset["money"],
-          openid: token.token.openid,
-          unionid: token.unionId,
-          cardid: "ddd",
-          code: "ddd",
-          mcode: cfg.mcode
+        topupContext: {          
+          money: event.target.dataset["money"]
         }
       });
-    }
-    // console.log(me.data.topupContext)
+    }   
   },
   changeMoney: function(event) {
     me.setData({

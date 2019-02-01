@@ -48,6 +48,7 @@ Page({
       appid: cfg.appid,
       openid: token.token.openid
     }).then(res => {
+      console.log("usercards",res.data);
       me.setData({ userCards: res.data });
     });
   },
