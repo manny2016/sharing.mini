@@ -1,62 +1,60 @@
 {
   "pages": [
     "pages/welcome/index",
+    "pages/dashboard/index",
+    "pages/center/index",
+    "pages/order/index",
+    "pages/cart/index",
+    "pages/type/index",
+    "pages/good/index",
+    "pages/payorder/index",
+    "pages/center/feedback/feedback",
+    "pages/brand/brand",
+    "pages/brandShop/brandShop",
+    "pages/getCoupon/getCoupon",
+    "pages/sale/sale",
+    "pages/expressInfo/index",
     "pages/card/index",
-    "pages/card_details/index",
-    "pages/store/index",
-    "pages/member/index",
-    "pages/auth/index",
-    "pages/pay/index",
-    "pages/topup/index",
-    "pages/login/index",
-    "pages/make-order/index",
-    "pages/coupon/index",
-    "pages/myorder/index"
+    "pages/shop/index",
+    "pages/card_details/index"
   ],
   "window": {
-    "backgroundTextStyle": "white",
     "navigationBarBackgroundColor": "#FAFAFA",
     "navigationBarTitleText": "柠檬工坊",
     "navigationBarTextStyle": "black",
-    "backgroundColor": "#F2f2f2"
+    "backgroundTextStyle": "dark",
+    "backgroundColor": "#f9f9f9"
   },
-  "networkTimeout": {
-    "request": 10000,
-    "connectSocket": 10000,
-    "uploadFile": 10000,
-    "downloadFile": 10000
-  },
+  "debug": true,
   "tabBar": {
-    "color": "#777",
-    "selectedColor": "#FF4D61",
-    "borderStyle": "black",
-    "backgroundColor": "#FAFAFA",
+    "color": "#a9b7b7",
+    "selectedColor": "#d81e06",
+    "borderStyle": "white",
     "list": [
       {
-        "pagePath": "pages/store/index",
-        "iconPath": "images/tabbar/mmhtab_icon_mmh_n@2x.png",
-        "selectedIconPath": "images/tabbar/mmhtab_icon_mmh_s@2x.png",
+        "selectedIconPath": "images/index.png",
+        "iconPath": "images/index1.png",
+        "pagePath": "pages/dashboard/index",
         "text": "首页"
       },
       {
-        "pagePath": "pages/myorder/index",
-        "iconPath": "images/tabbar/mmhtab_icon_gwc_n@2x.png",
-        "selectedIconPath": "images/tabbar/mmhtab_icon_gwc_s@2x.png",
-        "text": "订单"
+        "selectedIconPath": "images/type.png",
+        "iconPath": "images/type1.png",
+        "pagePath": "pages/type/index",
+        "text": "分类"
       },
       {
-        "pagePath": "pages/card/index",
-        "iconPath": "images/tabbar/mmhtab_icon_fl_n@2x.png",
-        "selectedIconPath": "images/tabbar/mmhtab_icon_fl_s@2x.png",
-        "text": "分销"
+        "selectedIconPath": "images/cart.png",
+        "iconPath": "images/cart1.png",
+        "pagePath": "pages/cart/index",
+        "text": "购物车"
       },
       {
-        "pagePath": "pages/member/index",
-        "iconPath": "images/tabbar/mmhtab_icon_me_n@2x.png",
-        "selectedIconPath": "images/tabbar/mmhtab_icon_me_s@2x.png",
-        "text": "个人中心"
+        "selectedIconPath": "images/center.png",
+        "iconPath": "images/center1.png",
+        "pagePath": "pages/center/index",
+        "text": "我的"
       }
     ]
-  },
-  "debug": true
+  }
 }

@@ -10,7 +10,7 @@ import {
   regeneratorRuntime
 } from '../../utils/co-loader';
 import request from '../../utils/request';
-import { queryMCardDetails, upgradeSharedPyramid } from "../../utils/endpoints";
+import { queryMCardDetails, upgradeSharedPyramid } from "../../utils/sharing";
 
 let app = getApp();
 Page({

@@ -13,7 +13,7 @@ import request from '../../utils/request';
 
 import {
   topup
-} from "../../utils/endpoints";
+} from "../../utils/sharing";
 
 let app = getApp();
 Page({
@@ -89,6 +89,7 @@ Page({
     let context = me.data.topupContext;
     console.log("clientPayment", context);
     me.topup(context).then((ctx) => {
+    
       wx.requestPayment({
         timeStamp: ctx.data.timeStamp,
         nonceStr: ctx.data.nonceStr,
@@ -102,7 +103,9 @@ Page({
           console.log(res);
         },
         'complete': function(res) {
-          console.log(res);
+          wx.switchTab({
+            url: '../card/index',
+          })
         }
       })
     });

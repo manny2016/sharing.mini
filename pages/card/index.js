@@ -11,7 +11,7 @@ import {
   regeneratorRuntime
 } from '../../utils/co-loader';
 import request from '../../utils/request';
-import { queryCardsByMid, queryMyMCardDetails } from "../../utils/endpoints";
+import { queryCardsByMid, queryMyMCardDetails } from "../../utils/sharing";
 let app = getApp();
 Page({
   /**

@@ -1,5 +1,5 @@
 <swiper indicator-dots="true">
-  <block wx:for="{{images}}" wx:for-index="index">
+  <block wx:for="{{images}}" wx:for-index="index" wx:key="item">
     <swiper-item class="swiper-items">
       <image class="swiper-image" src="{{item}}"></image>
       <button class="button-img" 

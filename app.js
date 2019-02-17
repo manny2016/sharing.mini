@@ -1,6 +1,6 @@
 //app.js
 import cfg from 'config/index.js'
-import WeToast from '/components/wetoast/index.js'; //导入构造函数
+
 import {
   getUserInfo
 } from 'utils/index';
@@ -14,7 +14,7 @@ import {
 var app = getApp();
 //app.js
 App({
-  WeToast, 
+ 
   getUserSession,
   getUserGranted,
   relateSharingVUser,

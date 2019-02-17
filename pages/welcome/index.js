@@ -27,7 +27,7 @@ Page({
       let token = wx.getStorageSync(cfg.localKey.token);
       if (res.canUseUserInfo && token.token.openid != undefined) {
         wx.switchTab({
-          url: '/pages/store/index',
+          url: '/pages/dashboard/index',
         })
       }
       else {
@@ -43,7 +43,7 @@ Page({
     if (event.detail.userInfo) { //用户点了接受按钮              
       app.readlyUserInfoCallback(event.detail,callback=>{
         wx.switchTab({
-          url: '/pages/card/index',
+          url: '/pages/dashboard/index',
         })
       });
       

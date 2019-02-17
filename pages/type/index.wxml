@@ -1,0 +1,37 @@
+<view class="book-box">
+
+  <scroll-view class='swipter-nav' scroll-y="true" style="height:{{winHeight}}px; width:200rpx">  
+    <view class="swiper-vertical-tab">
+      <view wx:for="{{categories}}" wx:key="item" class="{{currentTab==item.categoryId ? 'on' : ''}}" bindtap="chooseType" data-categoryid="{{item.categoryId}}">
+        {{item.categoryName}}
+      </view>
+    </view>
+  </scroll-view>
+  <scroll-view class="swiper-vertical-box" scroll-y="true" style="height:{{winHeight}}px;width:200rpx">
+    <view wx-if="{{currentTab==item.categoryId}}" class="vertical-list" wx:for="{{categories}}" wx:key="item" >
+      <text class="title">{{item.categoryName}}</text>
+      <block wx:if="{{item.products.length}}">
+        <view class="type-detail">
+          <view wx:for="{{item.products}}" wx:key="product" >
+            <navigator url="/pages/good/index?id={{item.id}}">
+              <image src="{{item.imageUrl}}" mode="aspectFill"></image>
+              <view class="book-detail">
+                <text>{{item.name}}</text>
+                <view>
+                  <text class="money">￥{{item.fixedPrice}}元</text>
+                  <view class="operations smallsize">
+                    销量：{{item.salesVol}}
+                  </view>
+                </view>
+              </view>
+            </navigator>
+          </view>
+        </view>
+      </block>
+      <block wx:else>
+        <view class='noshop'>暂无商品</view>
+      </block>
+    </view>
+  </scroll-view>
+
+</view>

@@ -1,0 +1,45 @@
+<swiper style="height:200px;" indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+  <!--广告banner-->
+  <block wx:for="{{ banners }}" wx:key="item">
+    <swiper-item>
+      <navigator url="/pages/good/index?id={{item.id}}">
+        <image src="{{ item.imageUrl }}" class="slide-image" mode='aspectFill' />
+      </navigator>
+    </swiper-item>
+  </block>
+</swiper>
+<!-- <view class="desc">
+      <view>
+        <image src="../../images/ok.png"/>
+        品牌保障  
+      </view>
+      <view class="zan-cell__bd">
+        <image src="../../images/bao.png"/>
+        担保交易  
+      </view>
+      <view class="zan-cell__bd">
+        <image src="../../images/serven.png"/>
+        7天包换  
+      </view>
+</view> -->
+
+<navigator class='zhekou' url='../getCoupon/getCoupon'>
+  <image src='../../images/ZHEK.png'></image>
+</navigator>
+<view class="container">
+  <view class="zan-panel" style="border-top:0px;border-bottom:0px;">
+    <view class="zan-cell zan-cell--access">
+      <view class="zan-cell__bd" style="font-weight:bold;">推荐商品</view>
+      <view class="zan-cell__ft smallsize" bindtap="more">全部商品</view>
+    </view>
+    <view style="flex-direction: column;flex-wrap: wrap;align-content: space-between;">
+      <div class="column" style="flex-basis: 100%;display: flex;justify-content: space-between;" wx:for="{{rec}}" wx:key="good" wx:for-index="idx">
+        <navigator url="/pages/good/index?id={{rec.id}}" wx:for="{{item}}" wx:key="g" wx:for-item="rec" style="margin:20rpx;width:50%">
+          <image class="goods-img" src="{{rec.imageUrl}}" mode='aspectFill' />
+          <view class="good-name">{{rec.name}}</view>
+          <view class="good-price">￥{{rec.fixedPrice}}元</view>
+        </navigator>
+      </div>
+    </view>
+  </view>
+</view>
