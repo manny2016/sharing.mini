@@ -7,21 +7,21 @@ Page({
   data: {
     showAddr: false,
     showAddAddr: true,
-    showModalStatus:false,
-    showDelivery:false,
+    showModalStatus: false,
+    showDelivery: false,
     totalMoney: 0,
-    goodMoney:0,
-    price:0,
-    showCoupon:false,
-    fare: 0.00,
+    goodMoney: 0,
+    price: 0,
+    showCoupon: false,
+    fare: 5.00,
     allOrder: [],
-    couponid:"",
-    useCoupon:false,    
-    delivery:0
+    couponid: "",
+    useCoupon: false,
+    delivery: 0
   },
   onShow() {
     let totalMoney = null;
-    let total =null;
+    let total = null;
     wx.getStorage({
       key: 'orderResult',
       success: res => {
@@ -31,7 +31,7 @@ Page({
         let goodMoney = 0;
         for (let i = 0; i < len; i++) {
           goodMoney += res.data[i].number * res.data[i].price;
-          if (res.data[i].fare > fare){
+          if (res.data[i].fare > fare) {
             fare = res.data[i].fare;
           }
         }
@@ -43,7 +43,8 @@ Page({
           detail: res.data
         })
       }
-    })  
+    });
+
   },
   setCoupon(e) {
     let id = e.currentTarget.dataset.id;
@@ -52,7 +53,7 @@ Page({
     this.setData({
       price: price,
       showCoupon: false,
-      useCoupon:true,
+      useCoupon: true,
       coupon: {
         id: id,
         price: price
@@ -60,20 +61,25 @@ Page({
     })
 
   },
-  getCoupon(){
-    if(this.data.allOrder.length !=0){
+  getCoupon() {
+    if (this.data.allOrder.length != 0) {
       this.setData({
-        showCoupon:true
+        showCoupon: true
       })
     }
   },
-  chooseDelivery(){
-    this.setData({ showDelivery:true});
+  chooseDelivery() {
+    this.setData({ showDelivery: true });
     this.showModal();
   },
-  setDelivery(e){
+  setDelivery(e) {
     let type = e.currentTarget.dataset.type;
-    this.setData({delivery:type});
+    this.setData({ delivery: type });
+    if (type == 1) {//自提
+      me.setData({ fare: 0.00 });
+    } else {
+      me.setData({ fare: 5.00 });
+    }
     this.hideModal();
   },
   getAddress() {
@@ -99,7 +105,7 @@ Page({
             result.set('addrdetail', res.provinceName + res.cityName + res.countyName + res.detailInfo);
             result.set('mailcode', res.nationalCode);
             result.save(null, {
-              success: (result) => {},
+              success: (result) => { },
               error: (result, error) => {
                 console.log('地址创建失败');
               }
@@ -113,7 +119,7 @@ Page({
     })
   },
   onLoad() {
-   const me = this;
+    const me = this;
     let token = wx.getStorageSync(cfg.localKey.token);
     console.log(token);
     //获取用户的信息
@@ -144,13 +150,17 @@ Page({
     //   }
     // });
   },
-  placeOrder: function(event) {
+  placeOrder: function (event) {
     var that = this;
     // if (this.data.couponid) {
     //   console.log(2222);
     // }
     if (this.data.showAddAddr) {
       common.showTip("请填写收货地址", "loading");
+      return false;
+    }
+    if(this.data.delivery==0){
+      common.showTip("请选择配送方式", "loading");
       return false;
     }
     // 发起支付
@@ -161,20 +171,18 @@ Page({
       addrdetail: this.data.addrdetail
     };
     var coupon = this.data.price;
-    var totalPrice = parseFloat(this.data.totalMoney) - coupon;    
-    var remarks = event.detail.value.remark;   
+    var totalPrice = parseFloat(this.data.totalMoney) - coupon;
+    var remarks = event.detail.value.remark;
     wx.getStorage({
       key: 'openid',
-      success: function(res) {
+      success: function (res) {
         var openId = res.data;
         if (!openId) {
           console.log('未获取到openId请刷新重试');
           return false;
         }
-
-
         //传参数金额，名称，描述,openid
-        Bmob.Pay.wechatPay(totalPrice, '小程序商城', '描述', openId).then(function(resp) {
+        Bmob.Pay.wechatPay(totalPrice, '小程序商城', '描述', openId).then(function (resp) {
 
           //服务端返回成功
           var timeStamp = resp.timestamp,
@@ -189,7 +197,7 @@ Page({
             'package': packages,
             'signType': 'MD5',
             'paySign': sign,
-            'success': function(res) {
+            'success': function (res) {
               //付款成功,这里可以写你的业务代码
 
               var User = Bmob.Object.extend("_User");
@@ -207,28 +215,28 @@ Page({
               Order.set("status", 1);
               Order.set("userInfo", userInfo);
               Order.save(null, {
-                success: function(result) {
+                success: function (result) {
                   wx.redirectTo({
                     url: '../order/index'
                   })
                 },
-                error: function(result, error) {
+                error: function (result, error) {
 
                 }
               });
 
-              if(that.data.useCoupon){
+              if (that.data.useCoupon) {
                 var userCoupon = Bmob.Object.extend("user_coupon");
                 var queryCoupon = new Bmob.Query(userCoupon);
-                queryCoupon.get(that.data.couponid,{
-                  success:function(result){
-                    result.set('status',1);
+                queryCoupon.get(that.data.couponid, {
+                  success: function (result) {
+                    result.set('status', 1);
                     result.save();
                   }
                 })
               }
             },
-            'fail': function(res) {
+            'fail': function (res) {
               // console.log(res)
               // var User = Bmob.Object.extend("_User");
               // var currentUser = Bmob.User.current();
@@ -265,7 +273,7 @@ Page({
             }
           })
 
-        }, function(err) {
+        }, function (err) {
           console.log('服务端返回失败');
           console.log(err);
         });

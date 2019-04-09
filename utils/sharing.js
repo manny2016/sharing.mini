@@ -83,7 +83,11 @@ const queryProductDetails=co.wrap(function* (id){
   });
   return result;
 });
-
+const detectSharedBy=function(options){
+  if (options.sharedby){
+    wx.setStorageSync(cfg.localKey.sharedBy, options.sharedby);
+  }
+};
 export {
   queryCardsByMid,
   topup,
@@ -92,5 +96,6 @@ export {
   upgradeSharedPyramid,
   queryHotSalesProducts,
   queryProductTree,
-  queryProductDetails
+  queryProductDetails,
+  detectSharedBy
 };

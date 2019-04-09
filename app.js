@@ -17,14 +17,14 @@ App({
  
   getUserSession,
   getUserGranted,
-  relateSharingVUser,
-
+  relateSharingVUser,  
   globalData: {   
     grantedScope: {
       canUseUserInfo: false,
       canUseMobile: false,
       canUseLocation: false
-    }  
+    },
+    sharedBy:null  
   },
   onLaunch() {
     const me = this;     
@@ -58,8 +58,7 @@ App({
           callback();
         }
       }
-    });
-    
+    });    
   },
   readlyGettUserGrantedCallback: function(isReady) {    
     this.globalData.grantedScope = {

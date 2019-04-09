@@ -1,7 +1,10 @@
 var Zan = require('../../dist/index');
 var common = require('../../utils/common.js');
 const WxParse = require('../../utils/wxParse/wxParse.js');
-import { queryProductDetails } from "../../utils/sharing";
+import {
+  queryProductDetails
+} from "../../utils/sharing";
+import cfg from '../../config/index.js';
 var app = getApp()
 
 Page(Object.assign({}, Zan.Quantity, {
@@ -13,13 +16,14 @@ Page(Object.assign({}, Zan.Quantity, {
     duration: 1000, //延时时间
     detail: {
       "imageUrl": "https://www.yourc.club/images/banners/1.jpg"
-    },//页面数据
+    }, //页面数据
     hiddenModal: true,
     id: 0,
-    goodNum: 10000,//库存
-    price: 10.00,//商品价格
-    minPrice: 8,//商品最低价格
-    maxPrice: 20,//商品最高价格
+    goodNum: 10000, //库存
+    price: 10.00, //商品价格
+    option: "",
+    // minPrice: 8,//商品最低价格
+    // maxPrice: 20,//商品最高价格
     quantity1: {
       quantity: 1,
       min: 1,
@@ -27,54 +31,81 @@ Page(Object.assign({}, Zan.Quantity, {
     },
     actionType: 'payOrder',
     cartResult: false,
-    option: [],
-    optionIndex: -1,
-    isOption: false,//是否显示商品属性
+    specifications: [],
+    isOption: true, //是否显示商品属性
     fare: 0.00,
     imgUrls: []
   },
-  onLoad: function (options) {
-    console.log(options.id);
+  onLoad: function(options) {
+    if (options.fromid) {
+      wx.setStorageSync(cfg.localKey.sharedBy, options.fromid)
+    }
     if (!options.id) {
       common.showModal("获取商品信息失败", '', false, () => {
-        wx.navigateBack({ delta: 1 });
+        wx.navigateBack({
+          delta: 1
+        });
       });
       return false;
     }
-    this.setData({ id: options.id });
-    this.getData();//获取页面数据
+    this.setData({
+      id: options.id
+    });
+    this.getData(); //获取页面数据
     // this.getCartResult();//购物车是否有商品
   },
 
-  onShow: function () { },
+  onShow: function() {},
 
-  getData: function () {
-    var me = this;
-    wx.showLoading({ title: '加载中' });
+  getData: function() {
+    const me = this;
+    wx.showLoading({
+      title: '加载中'
+    });
     me.queryProductDetails(me.data.id).then(res => {
-      if(!res.data){
+      if (!res.data) {
         common.showModal("商品已下架", '', false, () => {
-          wx.navigateBack({ delta: 1 });
+          wx.navigateBack({
+            delta: 1
+          });
         });
         return;
-      }      
+      }    
+        
       me.setData({
-        imgUrls: res.data.imgUrls,
+        imgUrls: res.data.settings.banners,
         price: res.data.fixedPrice,
         // fare: 5,
         name: res.data.name,
         detail: {
           name: res.data.name,
           description: res.data.description,
-          imageUrl:res.data.imageUrl
-        }
+          imageUrl: res.data.imageUrl
+        },
+        specifications: res.data.settings.specifications
       });
+      me.replaceSelectOption(res.data.settings.specifications);
       wx.hideLoading();
     });
   },
+  replaceSelectOption: function (specifications){
+    const me = this;
+    var optionSummary = "";
+    let fixedPrice = 0;   
+    for (var item in specifications) {      
+      for (var index in specifications[item].options)        
+        if(index==specifications[item].current){
+          optionSummary +=specifications[item].options[index].name+",";
+          if(specifications[item].options[index].price){
+            fixedPrice+=specifications[item].options[index].price;
+          }
+        }
+    }            
+    me.setData({ price: (fixedPrice / 100).toFixed(2)});
+    me.setData({option:optionSummary});
+  },
 
-
-  placeOrder: function (event) {
+  placeOrder: function(event) {
     var name = event.target.dataset.name;
     this.setData({
       actionType: name
@@ -83,7 +114,7 @@ Page(Object.assign({}, Zan.Quantity, {
     this.showModal();
   },
 
-  showModal: function () {
+  showModal: function() {
     // 显示遮罩层
     var animation = wx.createAnimation({
       duration: 200,
@@ -96,7 +127,7 @@ Page(Object.assign({}, Zan.Quantity, {
       animationData: animation.export(),
       showModalStatus: true
     })
-    setTimeout(function () {
+    setTimeout(function() {
       animation.translateY(0).step()
       this.setData({
         animationData: animation.export()
@@ -104,7 +135,7 @@ Page(Object.assign({}, Zan.Quantity, {
     }.bind(this), 200)
   },
 
-  hideModal: function () {
+  hideModal: function() {
     // 隐藏遮罩层
     var animation = wx.createAnimation({
       duration: 200,
@@ -116,7 +147,7 @@ Page(Object.assign({}, Zan.Quantity, {
     this.setData({
       animationData: animation.export(),
     })
-    setTimeout(function () {
+    setTimeout(function() {
       animation.translateY(0).step()
       this.setData({
         animationData: animation.export(),
@@ -125,26 +156,22 @@ Page(Object.assign({}, Zan.Quantity, {
     }.bind(this), 200)
   },
 
-  click_cancel: function () {
+  click_cancel: function() {
     this.hideModal()
   },
 
-  payOrder: function () {
+  payOrder: function() {
     //获取传递过来的数量，商品名称，价格
     let number = this.data.quantity1.quantity;
     let good_number = this.data.goodNum;
-
-    if (parseInt(number) > parseInt(good_number)) {
-      common.showTip("货存不足！", 'loading');
-      return false;
+    let properties = this.getProductProperties();    
+    if(properties==""){
+      common.showModal("请选择商品规格", '', false, () => {});
+      return;
     }
+    
 
-    if (this.data.isOption && this.data.optionIndex == -1) {
-      common.showTip("请选择商品属性", 'loading');
-      return false;
-    }
-
-    let goodOption = this.data.isOption ? this.data.option[this.data.optionIndex].optionName : '';
+    let goodOption = this.data.isOption ? this.data.specifications[this.data.optionIndex].optionName : '';
 
     let detailArray = {
       number: number,
@@ -152,7 +179,7 @@ Page(Object.assign({}, Zan.Quantity, {
       name: this.data.detail.name,
       pic: this.data.detail.imageUrl,
       fare: 0,
-      //option: goodOption,
+      option: goodOption,
     };
     let orderResult = new Array();
     orderResult.push(detailArray);
@@ -165,22 +192,9 @@ Page(Object.assign({}, Zan.Quantity, {
     })
   },
 
-  addCart: function () {
-    const me = this;
-    //购物车数据放进本地缓存
+  addCart: function() {
+    const me = this;    
     let number = me.data.quantity1.quantity;
-    // let good_number = this.data.goodNum;
-    // if (parseInt(number) > parseInt(good_number)) {
-    //   common.showTip("货存不足！", 'loading');
-    //   return false;
-    // }
-    // if (this.data.isOption && this.data.optionIndex == -1) {
-    //   common.showTip("请选择商品属性", 'loading');
-    //   return false;
-    // }
-    
-    // let goodOption = me.data.isOption ? me.data.option[this.data.optionIndex].optionName : '';
-
     let detailArray = {
       number: number,
       // good_number: good_number,
@@ -189,7 +203,7 @@ Page(Object.assign({}, Zan.Quantity, {
       name: me.data.detail.name,
       pic: me.data.detail.imageUrl,
       // fare: me.data.detail.get('fare'),
-      // option: goodOption,
+      option:me.data.option,
       active: true
     };
     console.log(detailArray);
@@ -215,7 +229,7 @@ Page(Object.assign({}, Zan.Quantity, {
     });
   },
 
-  getCartResult: function () {
+  getCartResult: function() {
     wx.getStorage({
       key: 'cartResult',
       success: res => {
@@ -228,29 +242,41 @@ Page(Object.assign({}, Zan.Quantity, {
     })
   },
 
-  index: function () {
+  index: function() {
     wx.switchTab({
       url: '../dashboard/index'
     })
   },
 
-  cart: function () {
+  cart: function() {
     wx.switchTab({
       url: '../cart/index'
     })
   },
 
   //选择商品属性
-  selectOption: function (e) {
-    let opIndex = e.currentTarget.dataset.opindex;
-    let option = this.data.option;
-    let goodNum = option[opIndex].gnum;
-    let price = option[opIndex].price;
-    this.setData({
-      optionIndex: opIndex,
-      goodNum: goodNum,
-      price: price,
-    });
-  }
+  selectOption: function(e) {
+    const me = this;
+    let item = e.currentTarget.dataset.item;
+    let index = e.currentTarget.dataset.index;
+    let options = me.data.specifications;
+    options[item].current = index;
+    me.setData({specifications:options});    
+    me.replaceSelectOption(me.data.specifications);   
+  },
+  getProductProperties:function(){
+    let properties = "";
+    if(this.data.specifications){
+      for (var item in specifications) {
+        var specify = specifications[item]
+        var specifyName = specify.options[specify.current].name;
+        properties += specifyName+",";
+        
+      }
+    }
+    return properties;
+  },
+  getProductPrice:function(){
 
+  }
 }))

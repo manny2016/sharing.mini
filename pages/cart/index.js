@@ -40,7 +40,7 @@ Page({
   onShow: function(){
       var shopList = [];
       // 获取购物车数据
-      var shopCarInfoMem = wx.getStorageSync('cartResult');
+      var shopCarInfoMem = wx.getStorageSync('cartResult');      
       this.data.goodsList.list = shopCarInfoMem;
       this.setGoodsList(this.getSaveHide(), this.totalPrice(), this.allSelect(), this.noSelect(), shopCarInfoMem);
   },
@@ -96,7 +96,6 @@ Page({
      if(index!=="" && index != null){
         list[parseInt(index)].left = left; 
         this.setGoodsList(this.getSaveHide(),this.totalPrice(),this.allSelect(),this.noSelect(),list);
-
       }
     }
   },
@@ -123,7 +122,7 @@ Page({
             total+= parseFloat(curItem.price)*curItem.number;
           }
       }
-      return total;
+      return total.toFixed(2);
    },
    allSelect:function(){
       var list = this.data.goodsList.list;
@@ -273,7 +272,7 @@ Page({
     },
     navigateToPayOrder:function () {
       //清除购物车库存
-      wx.removeStorageSync('cartResult')
+      //wx.removeStorageSync('cartResult')
       wx.hideLoading();
       wx.navigateTo({
         url:"../payorder/index"

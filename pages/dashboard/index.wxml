@@ -22,7 +22,7 @@
         7天包换  
       </view>
 </view> -->
-
+<view>from:{{fromid}}</view>
 <navigator class='zhekou' url='../getCoupon/getCoupon'>
   <image src='../../images/ZHEK.png'></image>
 </navigator>
@@ -42,4 +42,8 @@
       </div>
     </view>
   </view>
+</view>
+<view class='share-wrap'>
+  <button open-type='share' class='share'>
+  </button>  
 </view>

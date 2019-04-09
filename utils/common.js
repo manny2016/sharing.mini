@@ -1,3 +1,4 @@
+import cfg from '../config/index.js';
 function showTip(sms, icon, fun, t) {
     if (!t) {
         t = 1000;
@@ -20,7 +21,11 @@ function showModal(c,t,f,fun) {
         success: fun
     })
 }
-
+function setSharedBy(options){
+  if(options.sharedby){
+    wx.setStorageSync(cfg.localKey.sharedBy, options.sharedby)
+  } 
+}
 
 module.exports.showTip = showTip;
 module.exports.showModal = showModal;

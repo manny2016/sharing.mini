@@ -4,9 +4,10 @@ import ApiList from '../../config/api';
 import { promisify, complete } from '../../utils/promisify';
 import { co, Promise, regeneratorRuntime } from '../../utils/co-loader';
 import request from '../../utils/request';
+import { upgradeSharedPyramid } from '../../utils/sharing';
 let app = getApp();
 Page({
-
+  upgradeSharedPyramid,
   /**
    * 页面的初始数据
    */
@@ -22,13 +23,21 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    const me = this;
     app.getUserGranted().then(res => {
       app.readlyGettUserGrantedCallback(res);
       let token = wx.getStorageSync(cfg.localKey.token);
       if (res.canUseUserInfo && token.token.openid != undefined) {
+        if (options.sharedby) {
+          me.upgradeSharedPyramid({
+            sharedBy: { appid: cfg.appid, openid: options.sharedby },
+            current: { appid: cfg.appid, openid: token.sharing.openid },
+          }).then(res => {
+          });
+        }
         wx.switchTab({
           url: '/pages/dashboard/index',
-        })
+        });
       }
       else {
 
@@ -41,12 +50,12 @@ Page({
 
     const me = this;
     if (event.detail.userInfo) { //用户点了接受按钮              
-      app.readlyUserInfoCallback(event.detail,callback=>{
+      app.readlyUserInfoCallback(event.detail, callback => {
         wx.switchTab({
           url: '/pages/dashboard/index',
         })
       });
-      
+
     } else {
       //用户按了拒绝按钮            
       app.readlyGettUserGrantedCallback(false);

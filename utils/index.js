@@ -124,8 +124,7 @@ const getUserGranted = co.wrap(function*() {
 /**
  * 关联平台用户如果不存在则创建并返回平台用户
  */
-const relateSharingVUser = co.wrap(function*(wxUserInfo) {
-  console.log("wxUserInfo in relateSharingVUser", wxUserInfo);
+const relateSharingVUser = co.wrap(function*(wxUserInfo) {  
   let session = yield getUserSession();
   const userInfo = {
     wx: wxUserInfo,
@@ -150,7 +149,7 @@ const relateSharingVUser = co.wrap(function*(wxUserInfo) {
       method: "POST",
       data: postData
     });
-    console.log("register:",result);
+   
     userInfo.sharing = result.data;
     userInfo.unionId = result.data.unionId;
     wx.setStorageSync(cfg.localKey.token, userInfo);

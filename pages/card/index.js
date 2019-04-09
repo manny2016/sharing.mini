@@ -40,8 +40,7 @@ Page({
     let me = this;
     let token = wx.getStorageSync(cfg.localKey.token);
     me.setData({ token: token });
-    me.queryCardsByMid(cfg.mcode).then(res => {
-      console.log(res.data);
+    me.queryCardsByMid(cfg.mcode).then(res => {      
       me.setData({ "cards": res.data });
     });
     me.queryMyMCardDetails({

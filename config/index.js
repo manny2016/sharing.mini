@@ -32,6 +32,7 @@ const AppConfig = {
         qcRpt: "_qc_report",                    // 质检报告
         session:"_session",
         withCredentials:"_withCredentials",
+        sharedBy:"_sharedBy"
         
     },
 };
