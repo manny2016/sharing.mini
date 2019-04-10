@@ -88,7 +88,7 @@ const resetUserSession = co.wrap(function*() {
       grant_type: "authorization_code"
     }
   });
-  console.log("session",session);
+  //console.log("session",session);
   userSession.code = basic.code;
   userSession.session_key = session.data.session_key;
   userSession.openid = session.data.openid;

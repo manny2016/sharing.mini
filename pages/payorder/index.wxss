@@ -172,6 +172,16 @@ page{background:#f0f0f0;font-family: "微软雅黑",Helvetica, Arial, "Hiragino 
     overflow: hidden;
     padding: 10rpx 20rpx 5rpx 0;
 }
+.zan-tag{
+  margin: 10rpx;
+}
+.tags{
+  line-height:48rpx;
+  padding:0 16rpx;
+}
+.mt20{
+  margin-top:20rpx;
+}
 /* .column-cell{
   flex-direction: column;
   align-items:flex-start;
