@@ -22,6 +22,7 @@ export default {
     "applyMCard": `${host}api/sharing/ApplyMCard`,                               // genrnate card extend string
     "getCenterInfo":        `${host}V1/basic/memberInfo.htm`,                               //个人中心
     "topUp": `${host}api/sharing/GenerateUnifiedorderforTopup`,                                     //充值
+    "payOrder":`${host}api/sharing/GenerateUnifiedorderforOrder`,                                     //订单支付
 
     //门店相关
     "storeList":            `${host}V3/member/shop/queryMemberShopIndex.htm`,               //门店列表

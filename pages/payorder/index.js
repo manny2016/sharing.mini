@@ -1,9 +1,11 @@
 var common = require('../../utils/common.js');
 var util = require("../../utils/util.js");
 import cfg from '../../config/index.js';
+import { topup, payOrder } from "../../utils/sharing";
 var that;
 let app = getApp();
 Page({
+  payOrder,
   data: {
     showAddr: false,
     showAddAddr: true,
@@ -18,7 +20,7 @@ Page({
     couponid: "",
     useCoupon: false,
     delivery: 0,
-    token:null
+    token: null
   },
   onShow() {
     const me = this;
@@ -88,157 +90,73 @@ Page({
   getAddress() {
     const me = this;
     wx.chooseAddress({
-      success: (res) => {        
+      success: (res) => {
         me.setData({
           showAddAddr: false,
           showAddr: true,
           name: res.userName,
           addrdetail: res.provinceName + res.cityName + res.countyName + res.detailInfo,
           tel: res.telNumber
-        });       
+        });
       },
     })
   },
   onLoad() {
     const me = this;
-    wx.getStorage({key:cfg.localKey.token,success:function (res){
-      me.data.token=res.data;
-      //me.data.token.sharing.openid
-      console.log(res.data);
-    }});
+    wx.getStorage({
+      key: cfg.localKey.token, success: function (res) {
+        me.data.token = res.data;
+        //me.data.token.sharing.openid
+        console.log(res.data);
+      }
+    });
   },
   placeOrder: function (event) {
-    var that = this;   
+    var me = this;
     if (this.data.showAddAddr) {
       common.showTip("请填写收货地址", "loading");
       return false;
     }
-    if(this.data.delivery==0){
+    if (this.data.delivery == 0) {
       common.showTip("请选择配送方式", "loading");
       return false;
     }
     // 发起支付   
-    
     var orderDetails = {
-      totalPrice:parseFloat(this.data.totalMoney) ,
-      openid:this.data.token.sharing.openid,
-      mobile:this.data.tel,
-      name:this.data.name,
-      delivery:this.data.delivery,
-      details:this.data.detail,
-      addrdetail:this.data.addrdetail,
-      remarks:event.detail.value.remark      
+      appid: this.data.token.sharing.appid,
+      mchid: this.data.token.sharing.mchid,
+      id: this.data.token.sharing.id,
+      totalMoney: parseFloat(this.data.totalMoney),
+      openid: this.data.token.sharing.openid,
+      tel: this.data.tel,
+      customer: this.data.name,
+      delivery: this.data.delivery,
+      details: this.data.detail,
+      addrdetail: this.data.addrdetail,
+      remarks: event.detail.value.remark
     };
-    console.log("order",orderDetails);
-    
-    
-    // wx.getStorage({
-    //   key: 'openid',
-    //   success: function (res) {
-    //     var openId = res.data;
-    //     if (!openId) {
-    //       console.log('未获取到openId请刷新重试');
-    //       return false;
-    //     }
-    //     //传参数金额，名称，描述,openid
-    //     Bmob.Pay.wechatPay(totalPrice, '小程序商城', '描述', openId).then(function (resp) {
+    console.log("order", orderDetails);
+    me.payOrder(orderDetails).then((ctx) => {
+      wx.requestPayment({
+        timeStamp: ctx.data.timeStamp,
+        nonceStr: ctx.data.nonceStr,
+        package: ctx.data.package,
+        signType: ctx.data.signType,
+        paySign: ctx.data.paySign,
+        'success': function (res) {
+          console.log(res);//付款成功
+        },
+        'fail': function (res) {
+          console.log(res);
+        },
+        'complete': function (res) {
+          wx.switchTab({
+            url: '../card/index',
+          })
+        }
+      })
+    });
 
-    //       //服务端返回成功
-    //       var timeStamp = resp.timestamp,
-    //         nonceStr = resp.noncestr,
-    //         packages = resp.package,
-    //         orderId = resp.out_trade_no, //订单号，如需保存请建表保存。
-    //         sign = resp.sign;
-    //       //发起支付
-    //       wx.requestPayment({
-    //         'timeStamp': timeStamp,
-    //         'nonceStr': nonceStr,
-    //         'package': packages,
-    //         'signType': 'MD5',
-    //         'paySign': sign,
-    //         'success': function (res) {
-    //           //付款成功,这里可以写你的业务代码
-
-    //           var User = Bmob.Object.extend("_User");
-    //           var currentUser = Bmob.User.current();
-    //           var objectid = currentUser.id;
-    //           var Order = Bmob.Object.extend("Order");
-    //           var Order = new Order();
-    //           var me = new Bmob.User();
-    //           me.id = objectid;
-    //           Order.set("remarks", remarks);
-    //           Order.set("orderUser", me);
-    //           Order.set("totalprice", parseFloat(totalPrice));
-    //           Order.set("orderDetail", orderDetail);
-    //           Order.set("orderId", orderId);
-    //           Order.set("status", 1);
-    //           Order.set("userInfo", userInfo);
-    //           Order.save(null, {
-    //             success: function (result) {
-    //               wx.redirectTo({
-    //                 url: '../order/index'
-    //               })
-    //             },
-    //             error: function (result, error) {
-
-    //             }
-    //           });
-
-    //           if (that.data.useCoupon) {
-    //             var userCoupon = Bmob.Object.extend("user_coupon");
-    //             var queryCoupon = new Bmob.Query(userCoupon);
-    //             queryCoupon.get(that.data.couponid, {
-    //               success: function (result) {
-    //                 result.set('status', 1);
-    //                 result.save();
-    //               }
-    //             })
-    //           }
-    //         },
-    //         'fail': function (res) {
-    //           // console.log(res)
-    //           // var User = Bmob.Object.extend("_User");
-    //           // var currentUser = Bmob.User.current();
-    //           // var objectid = currentUser.id;
-    //           // var Order = Bmob.Object.extend("Order");
-    //           // var Order = new Order();
-    //           // var me = new Bmob.User();
-    //           // me.id = objectid;
-    //           // Order.set("remarks", remarks);
-    //           // Order.set("orderUser", me);
-    //           // Order.set("totalprice", parseInt(totalPrice));
-    //           // Order.set("orderDetail", orderDetail);
-    //           // Order.set("status", 0);
-    //           // Order.set("userInfo", userInfo);
-    //           // Order.set("orderId", orderId);
-    //           // Order.save(null, {
-    //           //   success: function(result) {
-    //           //     console.log(result.id)
-    //           //   },
-    //           //   error: function(result, error) {
-
-    //           //   }
-    //           // });
-    //           if (that.data.couponid) {
-    //             var userCoupon = Bmob.Object.extend("user_coupon");
-    //             var queryCoupon = new Bmob.Query(userCoupon);
-    //             queryCoupon.get(that.data.couponid, {
-    //               success: function (result) {
-    //                 result.set('status', 1);
-    //                 result.save();
-    //               }
-    //             })
-    //           }
-    //         }
-    //       })
-
-    //     }, function (err) {
-    //       console.log('服务端返回失败');
-    //       console.log(err);
-    //     });
-
-    //   }
-    // })
   },
   showModal: function () {
     // 显示遮罩层

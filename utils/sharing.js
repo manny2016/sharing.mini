@@ -29,7 +29,13 @@ const topup = co.wrap(function* (context) {
   });
   return result;
 })
-
+const payOrder=co.wrap(function* (context){
+  const result = yield request({
+    data:context,
+    url:ApiList.payOrder
+  });
+  return result;
+});
 const queryMCardDetails = co.wrap(function* (data) {
   const result = yield request({
     method: "POST",
@@ -97,5 +103,6 @@ export {
   queryHotSalesProducts,
   queryProductTree,
   queryProductDetails,
-  detectSharedBy
+  detectSharedBy,
+  payOrder
 };
