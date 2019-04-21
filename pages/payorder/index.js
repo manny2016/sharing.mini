@@ -15,40 +15,44 @@ Page({
     goodMoney: 0,
     price: 0,
     showCoupon: false,
-    fare: 0,
+    fare: 0.00,
     allOrder: [],
     couponid: "",
     useCoupon: false,
-    delivery: 0,
+    delivery: 1,
     token: null
   },
   onShow() {
     const me = this;
+    me.refreshTotalMoney();
+  },
+
+  refreshTotalMoney() {
+    const me = this;
     let totalMoney = null;
     let total = null;
+    let fare = me.data.fare;
+    console.log("fare", fare);
     wx.getStorage({
       key: 'orderResult',
       success: res => {
         console.log(res.data);
         let len = res.data.length;
-        let fare = me.data.fare;
+
         let goodMoney = 0;
         for (let i = 0; i < len; i++) {
           goodMoney += res.data[i].number * res.data[i].price;
-          if (res.data[i].fare > fare) {
-            fare = res.data[i].fare;
-          }
         }
         total = goodMoney + fare;
+
         this.setData({
-          fare: fare.toFixed(2),
+          fare: fare == 0 ? 0 : fare.toFixed(2),
           totalMoney: total.toFixed(2),
           goodMoney: goodMoney.toFixed(2),
           detail: res.data
         })
       }
     });
-
   },
   setCoupon(e) {
     let id = e.currentTarget.dataset.id;
@@ -85,6 +89,7 @@ Page({
     } else {
       me.setData({ fare: 5 });
     }
+    me.refreshTotalMoney();
     this.hideModal();
   },
   getAddress() {
@@ -96,7 +101,9 @@ Page({
           showAddr: true,
           name: res.userName,
           addrdetail: res.provinceName + res.cityName + res.countyName + res.detailInfo,
-          tel: res.telNumber
+          tel: res.telNumber,
+          delivery: 2,
+          fare:5.00
         });
       },
     })
@@ -113,12 +120,8 @@ Page({
   },
   placeOrder: function (event) {
     var me = this;
-    if (this.data.showAddAddr) {
+    if (this.data.showAddAddr && this.data.delivery == 2) {
       common.showTip("请填写收货地址", "loading");
-      return false;
-    }
-    if (this.data.delivery == 0) {
-      common.showTip("请选择配送方式", "loading");
       return false;
     }
     // 发起支付   

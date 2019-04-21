@@ -162,24 +162,22 @@ Page(Object.assign({}, Zan.Quantity, {
 
   payOrder: function() {
     //获取传递过来的数量，商品名称，价格
-    let number = this.data.quantity1.quantity;
-    let good_number = this.data.goodNum;
-    let properties = this.getProductProperties();    
+    const me = this;
+    let number = me.data.quantity1.quantity;    
+    let properties = me.getProductProperties();    
     if(properties==""){
       common.showModal("请选择商品规格", '', false, () => {});
       return;
     }
     
 
-    let goodOption = this.data.isOption ? this.data.specifications[this.data.optionIndex].optionName : '';
-
     let detailArray = {
       number: number,
-      price: this.data.isOption ? this.data.option[this.data.optionIndex].price : this.data.price,
-      name: this.data.detail.name,
-      pic: this.data.detail.imageUrl,
+      price: me.data.price,
+      name: me.data.detail.name,
+      pic: me.data.detail.imageUrl,
       fare: 0,
-      option: goodOption,
+      option: properties,
     };
     let orderResult = new Array();
     orderResult.push(detailArray);
@@ -266,17 +264,14 @@ Page(Object.assign({}, Zan.Quantity, {
   },
   getProductProperties:function(){
     let properties = "";
+    console.log("this.data.specifications",this.data.specifications);
     if(this.data.specifications){
-      for (var item in specifications) {
-        var specify = specifications[item]
+      for (var item in this.data.specifications) {
+        var specify = this.data.specifications[item]
         var specifyName = specify.options[specify.current].name;
-        properties += specifyName+",";
-        
+        properties += specifyName+",";        
       }
     }
     return properties;
-  },
-  getProductPrice:function(){
-
   }
 }))
