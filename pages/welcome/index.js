@@ -24,16 +24,13 @@ Page({
    */
   onLoad: function (options) {
     const me = this;
+    
     app.getUserGranted().then(res => {
       app.readlyGettUserGrantedCallback(res);
       let token = wx.getStorageSync(cfg.localKey.token);
       if (res.canUseUserInfo && token.token.openid != undefined) {
-        if (options.sharedby) {
-          me.upgradeSharedPyramid({
-            sharedBy: { appid: cfg.appid, openid: options.sharedby },
-            current: { appid: cfg.appid, openid: token.sharing.openid },
-          }).then(res => {
-          });
+        if (options.sharedBy) {
+          
         }
         wx.switchTab({
           url: '/pages/dashboard/index',
@@ -43,14 +40,20 @@ Page({
 
       }
     })
-
-
   },
   getUserInfoCallback: function (event) {
 
     const me = this;
     if (event.detail.userInfo) { //用户点了接受按钮              
       app.readlyUserInfoCallback(event.detail, callback => {
+        let shardby = me.getStorageSync(cfg.localKey.sharedBy);
+        if(shardby){
+          me.upgradeSharedPyramid({
+            sharedBy: { appid: cfg.appid, openid: shardby },
+            current: { appid: cfg.appid, openid: token.sharing.openid },
+          });
+        }
+        
         wx.switchTab({
           url: '/pages/dashboard/index',
         })

@@ -47,7 +47,7 @@
   </view>
   <view class="zan-panel">
     <view class="zan-cell">
-      <view class="zan-cell__bd" style="">商品详情</view>
+      <view class="zan-cell__bd" >商品详情</view>
     </view>
     <view style='padding-bottom:60rpx;'>
       <view class="desc" style="margin:15px">

@@ -13,8 +13,7 @@ import {
 
 var app = getApp();
 //app.js
-App({
- 
+App({ 
   getUserSession,
   getUserGranted,
   relateSharingVUser,  
@@ -28,21 +27,6 @@ App({
   },
   onLaunch() {
     const me = this;     
-    wx.login() // 重新登录
-    wx.checkSession({
-      success() {
-        // session_key 未过期，并且在本生命周期一直有效   
-        console.log("session key 有效")    
-      },
-      fail() {
-        // session_key 已经失效，需要重新执行登录流程     
-        me.getUserGranted().then(res => {
-          me.globalData.grantedScope = res;
-        })
-      }
-    })      
-
-    
     
   },  
   readlyUserInfoCallback: function(data,callback) {        
@@ -65,8 +49,7 @@ App({
       canUseUserInfo: isReady,
       canUseMobile: this.globalData.canUseMobile,
       canUseLocation: this.globalData.canUseLocation
-    }
-    console.log(this.globalData.grantedScope);
+    }    
   },
   onReady(){
    

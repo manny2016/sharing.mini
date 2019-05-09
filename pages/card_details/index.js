@@ -52,7 +52,7 @@ Page({
     //如果来自于微信分享则提交并保存分享关联信息
     if (options.fromOpenId!=token.token.openid&&options.fromOpenId!=undefined){
       me.upgradeSharedPyramid({
-        sharedBy:{appid:cfg.appid,openid:options.fromOpenId},
+        sharedBy:{appid:cfg.appid,openid:options.sharedBy},
         current: { appid: cfg.appid, openid:token.sharing.openid },
       }).then(res=>{
 

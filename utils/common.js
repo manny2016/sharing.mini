@@ -21,11 +21,11 @@ function showModal(c,t,f,fun) {
         success: fun
     })
 }
-function setSharedBy(options){
-  if(options.sharedby){
-    wx.setStorageSync(cfg.localKey.sharedBy, options.sharedby)
-  } 
-}
+// function setSharedBy(options){
+//   if(options.sharedby){
+//     wx.setStorageSync(cfg.localKey.sharedBy, options.sharedby)
+//   } 
+// }
 
 module.exports.showTip = showTip;
 module.exports.showModal = showModal;

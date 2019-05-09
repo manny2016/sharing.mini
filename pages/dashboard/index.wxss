@@ -141,8 +141,8 @@
 
 .share-wrap {
   position: fixed;
-  bottom: 60px;
-  right: 50px;
+  bottom: 10px;
+  right: 15px;
 }
 .share {
   width: 48px;
@@ -150,4 +150,37 @@
   background: transparent;
   border-width: 1px;
   background-image: url('https://www.yourc.club/images/icos/share-icon.png');
+}
+
+.commodity_attr_box {
+  width: 100%;
+  overflow: hidden;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  height: 120px;
+  z-index: 2000;
+  background: #fff;
+  /*display: flex;
+  flex-direction: column;
+  justify-content: center;*/
+}
+
+.btn-view{
+  font-size: 15px;
+  width: 100%;
+  display: flex;
+  height: 40px;
+  margin: 20,20;
+  background:#d81e06;
+  color:#fff;
+  flex-direction: row;
+  justify-content: space-around
+}
+.btn-cancel{
+  width: 49%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }

@@ -1,8 +1,8 @@
 /**
  * api list
  */
-const host = "https://www.yourc.club/";
-//const host = "http://localhost:62709/";
+//const host = "https://www.yourc.club/";
+const host = "http://192.168.0.101:62709/";
 export default {
   "getSession": `${host}api/sharing/GetSession`,                                        //获取微信用户信息
   "register": `${host}api/sharing/Register`,                           //解密微信用户信息

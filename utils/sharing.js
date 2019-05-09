@@ -29,10 +29,10 @@ const topup = co.wrap(function* (context) {
   });
   return result;
 })
-const payOrder=co.wrap(function* (context){
+const payOrder = co.wrap(function* (context) {
   const result = yield request({
-    data:context,
-    url:ApiList.payOrder
+    data: context,
+    url: ApiList.payOrder
   });
   return result;
 });
@@ -80,19 +80,33 @@ const queryProductTree = co.wrap(function* () {
   });
   return result;
 });
-const queryProductDetails=co.wrap(function* (id){ 
-  const data= {"id":id};  
+const queryProductDetails = co.wrap(function* (id) {
+  const data = { "id": id };
   const result = yield request({
-    method:"POST",
+    method: "POST",
     url: ApiList.queryProductDetails,
-    data:data
+    data: data
   });
   return result;
 });
-const detectSharedBy=function(options){
-  if (options.sharedby){
-    wx.setStorageSync(cfg.localKey.sharedBy, options.sharedby);
+/**
+ * 
+ * @param {*} options 保存 分享信息
+ */
+
+const storeSharedBy = function (options) {
+  var localStored = querySharedBy();
+  console.log("sharedBy",localStored);
+  if (options.sharedBy ) {
+    wx.setStorageSync(cfg.localKey.sharedBy, options.sharedBy);
+    console.log("store sharedBy",options.sharedBy);
   }
+};
+/**
+ * 查询分享信息
+ */
+const querySharedBy = function () {
+  return wx.getStorageSync(cfg.localKey.sharedBy);
 };
 export {
   queryCardsByMid,
@@ -103,6 +117,7 @@ export {
   queryHotSalesProducts,
   queryProductTree,
   queryProductDetails,
-  detectSharedBy,
+  storeSharedBy,
+  querySharedBy,
   payOrder
 };
