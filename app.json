@@ -1,5 +1,5 @@
 {
-  "pages": [    
+  "pages": [
     "pages/dashboard/index",
     "pages/center/index",
     "pages/order/index",
@@ -15,7 +15,8 @@
     "pages/expressInfo/index",
     "pages/card/index",
     "pages/shop/index",
-    "pages/card_details/index"
+    "pages/card_details/index",
+    "pages/reward/index"
   ],
   "window": {
     "navigationBarBackgroundColor": "#FAFAFA",

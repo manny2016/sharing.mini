@@ -136,7 +136,8 @@ Page({
       delivery: this.data.delivery,
       details: this.data.detail,
       addrdetail: this.data.addrdetail,
-      remarks: event.detail.value.remark
+      remarks: event.detail.value.remark,
+      fare:this.data.fare
     };
     console.log("order", orderDetails);
     me.payOrder(orderDetails).then((ctx) => {

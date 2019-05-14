@@ -1,19 +1,19 @@
-
+import cfg from '../../config/index.js';
 
 
 // pages/center/index.js
 
 Page({
   data:{
-    loading: true
+    loading: true,
+    token:null
   },
   onLoad:function(options){
     //页面初始化 options为页面跳转所带来的参数
-    var that = this;
-    var value = wx.getStorageSync('openid')
-    if (value) {
-   
-    }
+    const me = this;
+    const token = wx.getStorageSync(cfg.localKey.token);
+    me.setData({token:token});
+    console.log(token);
   },
   onReady:function(){
     // 页面渲染完成

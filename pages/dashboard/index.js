@@ -42,6 +42,12 @@ Page({
     
     if(!token.sharing) {
       me.setData({showAuthDialog:true});
+    }else{      
+      console.log(token.sharing);
+      token.wx.userInfo.openid = token.sharing.openid;
+      token.wx.userInfo.unionId =token.sharing.unionid; 
+      console.log(token.wx.userInfo);
+      app.readlyUserInfoCallback(token.wx,null);
     }
   },
 

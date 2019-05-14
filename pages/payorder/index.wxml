@@ -105,7 +105,7 @@
           <text style="color:red">￥{{totalMoney-price}}</text>
         </view>
         <button class="box-right" formType="submit">
-          提交订单
+          提交订d单
         </button>
       </view>
     </view>
@@ -124,9 +124,6 @@
         <view bindtap="setDelivery" data-type='{{2}}' class="{{delivery== 2?'zan-tag  tags zan-tag--danger' : 'zan-tag tags'}}">外送</view>
       </view>
     </view>
-  </view>
- 
-
- 
+  </view> 
 
 </view>

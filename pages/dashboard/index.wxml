@@ -55,11 +55,11 @@
   <view class="zan-panel" style="margin-top:0px">
     <view class="zan-cell">
       <view class="zan-cell__bd">
-        为了给你提供更好的服务，小檬请求访问你的头像,昵称等个人信息.
+        点击解锁获取更多功能
       </view>
     </view>
   </view>
   <!--对话框按钮-->
-  <button class="btn-view" open-type='getUserInfo' bindgetuserinfo="getUserInfoCallback">允许访问</button>
+  <button class="btn-view" open-type='getUserInfo' bindgetuserinfo="getUserInfoCallback">解锁</button>
 
 </view>
